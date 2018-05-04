@@ -26,9 +26,7 @@ def iter_batch(data, lbl, batchsize=4, rand=True):
     if rand:
         c = list(zip(data, lbl))
         random.shuffle(c)
-
     d, l = zip(*c)
-
     for i in range(int(len(data)/batchsize)):
         yield d[i*batchsize:(i+1)*batchsize], l[i*batchsize:(i+1)*batchsize]
 
@@ -54,7 +52,6 @@ class BC_net(nn.Module):
 
 def main():
     # train our policy using Data Aggressive
-
     print('loading and building expert policy')
     policy_fn = load_policy.load_policy(args.expert_policy_file)
     print('loaded and built')
@@ -96,45 +93,14 @@ def main():
 
                 if args.render and i > 120:
                     env.render()
-                # if steps_all % 1000 == 0:
-                #     print("%i/%i"%(steps, max_steps))
-                #     plt.clf()
-                #     plt.plot(range(steps_all), loss_list, 'b-')
-                #     plt.ylim(0, 10)
-                #     plt.pause(.05)
-                #     plt.draw()
+
                 if steps+1 % 1000 == 0:
                     break
-        plt.clf()
-        plt.plot(range(steps_all), loss_list, 'b-')
-        plt.ylim(0, 10)
-        plt.pause(.05)
-        plt.draw()
-
-        for i in range(3):
-            print('iter', i)
-            obs = env.reset()
-            done = False
-            totalr = 0.
-            steps = 0
-            while not done:
-                # action = policy_fn(obs[None,:])
-                output = net(torch.tensor(obs[None,:], dtype=torch.float32))
-
-                obs, r, done, _ = env.step(np.squeeze(output.data.numpy()))
-                # totalr += r
-                steps += 1
-                if args.render:
-                    env.render()
-                if steps % 100 == 0: print("%i/%i"%(steps, max_steps))
-                if steps >= max_steps:
-                    break
-        #     returns.append(totalr)
-
-        # print('returns', returns)
-        # print('mean return', np.mean(returns))
-        # print('std of return', np.std(returns))
-
+            plt.clf()
+            plt.plot(range(steps_all), loss_list, 'b-')
+            plt.ylim(0, 10)
+            plt.pause(.05)
+            plt.draw()
 
 if __name__ == '__main__':
     main()
