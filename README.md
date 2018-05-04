@@ -3,7 +3,7 @@ The homework code for [CS 294: Deep Reinforcement Learning, Fall 2017](http://rl
 
 The code is modified based on course code [here](https://github.com/berkeleydeeprlcourse/homework).
 
-# Dependencies (-- May, 2018)
+# Dependencies (May, 2018)
 - python3 (newest version is ok)
 - [Tensorflow](https://www.tensorflow.org/install/) (newest version is ok)
 - OpenAI Gym 0.74
