@@ -7,6 +7,11 @@ import gym
 import load_policy
 import matplotlib.pyplot as plt
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('expert_policy_file', type=str)
@@ -28,13 +33,7 @@ def iter_batch(data, lbl, batchsize=4, rand=True):
         yield d[i*batchsize:(i+1)*batchsize], l[i*batchsize:(i+1)*batchsize]
 
 batchsize = 4
-max_epoch = 5
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import torch.utils.data as d
+max_epoch = 7
 
 class BC_net(nn.Module):
     def __init__(self, inputdim, outputdim):
@@ -81,15 +80,12 @@ def main():
             loss_list.append(loss.data.numpy())
             iter_count += 1
 
-            # if iter_count%1000 == 0:
-            #     plt.clf()
-            #     plt.plot(range(iter_count), loss_list, 'b-')
-            #     plt.pause(.05)
-            #     plt.draw()
-        plt.clf()
-        plt.plot(range(iter_count), loss_list, 'b-')
-        plt.pause(.05)
-        plt.draw()
+            if iter_count%1000 == 0:
+                plt.clf()
+                plt.plot(range(iter_count), loss_list, 'b-')
+                plt.ylim(0, 10)
+                plt.pause(.05)
+                plt.draw()
         print(epoch, iter_count)
 
     # see how our learned policy works
@@ -108,7 +104,7 @@ def main():
             steps = 0
             while not done:
                 # action = policy_fn(obs[None,:])
-                output = net(torch.tensor(obs, dtype=torch.float32))
+                output = net(torch.tensor(obs[None,:], dtype=torch.float32))
 
                 obs, r, done, _ = env.step(np.squeeze(output.data.numpy()))
                 totalr += r
