@@ -18,7 +18,7 @@ parser.add_argument('expert_policy_file', type=str)
 parser.add_argument('envname', type=str)
 parser.add_argument('--render', action='store_true')
 parser.add_argument("--max_timesteps", type=int)
-parser.add_argument('--num_rollouts', type=int, default=1500,
+parser.add_argument('--num_rollouts', type=int, default=250,
                     help='Number of expert roll outs')
 args = parser.parse_args()
 
@@ -94,7 +94,7 @@ def main():
                 if done:
                     done_counter += 1
 
-                if args.render and i > 500:
+                if args.render and i > 120:
                     env.render()
                 # if steps_all % 1000 == 0:
                 #     print("%i/%i"%(steps, max_steps))
@@ -105,6 +105,11 @@ def main():
                 #     plt.draw()
                 if steps+1 % 1000 == 0:
                     break
+        plt.clf()
+        plt.plot(range(steps_all), loss_list, 'b-')
+        plt.ylim(0, 10)
+        plt.pause(.05)
+        plt.draw()
 
         for i in range(3):
             print('iter', i)
