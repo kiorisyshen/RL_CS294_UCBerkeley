@@ -22,13 +22,6 @@ parser.add_argument('--num_rollouts', type=int, default=250,
                     help='Number of expert roll outs')
 args = parser.parse_args()
 
-def iter_batch(data, lbl, batchsize=4, rand=True):
-    if rand:
-        c = list(zip(data, lbl))
-        random.shuffle(c)
-    d, l = zip(*c)
-    for i in range(int(len(data)/batchsize)):
-        yield d[i*batchsize:(i+1)*batchsize], l[i*batchsize:(i+1)*batchsize]
 
 max_epoch = 5
 
