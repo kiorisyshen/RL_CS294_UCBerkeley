@@ -1,5 +1,5 @@
 # Description
-The homework code for [CS 294: Deep Reinforcement Learning, Fall 2017](http://rll.berkeley.edu/deeprlcourse/).
+The homework code for [CS 294: Deep Reinforcement Learning, Fall 2017](http://rail.eecs.berkeley.edu/deeprlcourse-fa17/index.html).
 
 The code is modified based on course code [here](https://github.com/berkeleydeeprlcourse/homework).
 
