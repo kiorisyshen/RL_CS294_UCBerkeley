@@ -11,6 +11,8 @@ Common required
 ## pybullet version
 - [OpenAI Gym](https://gym.openai.com/) (newest version is ok)
 - [pybullet](https://pybullet.org/wordpress/) (newest version is ok)
+- Result:
+  - ![pybullet](pybullet.gif)
 
 ## Mujoco version
 - [Tensorflow](https://www.tensorflow.org/install/) (newest version is ok)
@@ -23,3 +25,5 @@ Common required
     ```
     pip3 install -U 'mujoco-py<0.5.8,>=0.5.7'
     ```
+
+
